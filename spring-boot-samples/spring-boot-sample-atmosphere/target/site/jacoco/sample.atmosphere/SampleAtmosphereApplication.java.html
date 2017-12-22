@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SampleAtmosphereApplication.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Spring Boot Atmosphere Sample</a> &gt; <a href="index.source.html" class="el_package">sample.atmosphere</a> &gt; <span class="el_source">SampleAtmosphereApplication.java</span></div><h1>SampleAtmosphereApplication.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2012-2016 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package sample.atmosphere;
+
+import java.util.Collections;
+
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+
+import org.atmosphere.cpr.AtmosphereInitializer;
+import org.atmosphere.cpr.AtmosphereServlet;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.SpringBootConfiguration;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.web.servlet.ServletContextInitializer;
+import org.springframework.boot.web.servlet.ServletRegistrationBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+
+@SpringBootConfiguration
+@EnableAutoConfiguration
+<span class="fc" id="L40">public class SampleAtmosphereApplication {</span>
+
+	@Bean
+	public EmbeddedAtmosphereInitializer atmosphereInitializer() {
+<span class="fc" id="L44">		return new EmbeddedAtmosphereInitializer();</span>
+	}
+
+	@Bean
+	public ServletRegistrationBean atmosphereServlet() {
+		// Dispatcher servlet is mapped to '/home' to allow the AtmosphereServlet
+		// to be mapped to '/chat'
+<span class="fc" id="L51">		ServletRegistrationBean registration = new ServletRegistrationBean(</span>
+				new AtmosphereServlet(), &quot;/chat/*&quot;);
+<span class="fc" id="L53">		registration.addInitParameter(&quot;org.atmosphere.cpr.packages&quot;, &quot;sample&quot;);</span>
+<span class="fc" id="L54">		registration.addInitParameter(&quot;org.atmosphere.interceptor.HeartbeatInterceptor&quot;</span>
+				+ &quot;.clientHeartbeatFrequencyInSeconds&quot;, &quot;10&quot;);
+<span class="fc" id="L56">		registration.setLoadOnStartup(0);</span>
+		// Need to occur before the EmbeddedAtmosphereInitializer
+<span class="fc" id="L58">		registration.setOrder(Ordered.HIGHEST_PRECEDENCE);</span>
+<span class="fc" id="L59">		return registration;</span>
+	}
+
+	@Configuration
+<span class="fc" id="L63">	static class MvcConfiguration extends WebMvcConfigurerAdapter {</span>
+
+		@Override
+		public void addViewControllers(ViewControllerRegistry registry) {
+<span class="fc" id="L67">			registry.addViewController(&quot;/&quot;).setViewName(&quot;forward:/home/home.html&quot;);</span>
+<span class="fc" id="L68">		}</span>
+
+	}
+
+<span class="fc" id="L72">	private static class EmbeddedAtmosphereInitializer extends AtmosphereInitializer</span>
+			implements ServletContextInitializer {
+
+		@Override
+		public void onStartup(ServletContext servletContext) throws ServletException {
+<span class="fc" id="L77">			onStartup(Collections.&lt;Class&lt;?&gt;&gt;emptySet(), servletContext);</span>
+<span class="fc" id="L78">		}</span>
+
+	}
+
+	public static void main(String[] args) throws Exception {
+<span class="nc" id="L83">		SpringApplication.run(SampleAtmosphereApplication.class, args);</span>
+<span class="nc" id="L84">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>
