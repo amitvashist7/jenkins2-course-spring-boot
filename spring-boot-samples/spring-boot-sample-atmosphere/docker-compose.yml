@@ -1,0 +1,7 @@
+version: '2'
+
+services:
+  atmosphere:
+    build: .
+    ports:
+      - 4080:8080
