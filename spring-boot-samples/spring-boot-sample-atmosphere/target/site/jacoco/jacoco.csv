@@ -1,0 +1,7 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+Spring Boot Atmosphere Sample,sample.atmosphere,ChatService.JacksonEncoderDecoder,12,20,0,0,4,4,0,3,0,3
+Spring Boot Atmosphere Sample,sample.atmosphere,SampleAtmosphereApplication.MvcConfiguration,0,9,0,0,0,3,0,2,0,2
+Spring Boot Atmosphere Sample,sample.atmosphere,Message,4,26,0,0,2,9,1,6,1,6
+Spring Boot Atmosphere Sample,sample.atmosphere,SampleAtmosphereApplication.EmbeddedAtmosphereInitializer,0,8,0,0,0,3,0,2,0,2
+Spring Boot Atmosphere Sample,sample.atmosphere,ChatService,1,37,1,1,0,10,1,4,0,4
+Spring Boot Atmosphere Sample,sample.atmosphere,SampleAtmosphereApplication,5,37,0,0,2,8,1,3,1,3
